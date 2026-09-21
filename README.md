@@ -22,7 +22,7 @@
 - **2023 · Agent 做 ML 的可测量化起点**：MLAgentBench 等基准把「agent 能否跑通 ML 实验」变成可量化问题，经典 AutoML 工具链仍是主力。
 - **2024 · 要素成熟与首个闭环**：AI-Scientist 首次演示从 idea 到论文的全流程；MLE-bench 用 75 个 Kaggle 任务标尺化 ML 工程能力；自博弈（SPIN/SPPO）与合成数据管线（Magpie/Cosmopedia/distilabel）补全信号层与数据层。
 - **2025 · 端到端系统与严格评测**：AI-Scientist-v2 引入 agent 树搜索，AI-Researcher 获 NeurIPS 2025 Spotlight，AgentLaboratory、RD-Agent 覆盖工业 R&D；PaperBench 用 8,316 个层级化 rubric 节点把「复现顶会论文」变成长程评测。
-- **2026 · 极简闭环范式普及**：karpathy/autoresearch 以 630 行 Python 证明「一个文件 + 一个指标 + 固定时间预算」即可跑通自主研究循环（两天 700 次无人值守实验）；范式迅速泛化到 GPU kernel 优化（AutoKernel）与任意可度量指标（pi-autoresearch）；Training-as-a-Service（Tinker/Twinkle）让训练能力可被 agent 编程调用；PostTrainBench 开始直接考核 agent 的后训练实操。
+- **2026 · 极简闭环范式普及**：karpathy/autoresearch 以 630 行 Python 证明「一个文件 + 一个指标 + 固定时间预算」即可跑通自主研究循环（两天 700 次无人值守实验）；范式迅速泛化到 GPU kernel 优化（AutoKernel）与任意可度量指标（pi-autoresearch）；Training-as-a-Service（Tinker/Twinkle）让训练能力可被 agent 编程调用；PostTrainBench 开始直接考核 agent 的后训练实操；闭环交付形态向 Agent Skills 库收敛（见 [weekly/2026-W38](weekly/2026-W38.md)）。
 
 ## Contents
 
@@ -66,6 +66,7 @@
 - [Twinkle](https://github.com/modelscope/twinkle) - ModelScope 的 Client-Server 训练工作台，接口为 Tinker API 超集，支持 torchrun/Ray/Serverless 多租户 TaaS。
 - [OpenRL](https://github.com/OpenRL-Lab/openrl) - 通用强化学习研究框架，统一接口支持单/多智能体、自博弈与自然语言任务。
 - [OpenRLHF](https://github.com/OpenRLHF/OpenRLHF) - 基于 Ray + vLLM 的高性能 RLHF 框架。
+- [KDFlow](https://github.com/songmzhang/KDFlow) - 解耦架构的 LLM 蒸馏框架（SGLang 教师 + FSDP2 学生，hidden states 零拷贝传输），支持 on-policy KD 与跨 tokenizer，较同类框架提速 1.44×~6.36×。
 
 ## 自进化 / 自我博弈训练
 
@@ -83,6 +84,7 @@
 - [Cosmopedia](https://huggingface.co/datasets/HuggingFaceTB/cosmopedia) - HuggingFace 的大规模合成教科书语料，合成预训练数据的参照系。
 - [data-juicer](https://github.com/modelscope/data-juicer) - 大模型数据处理系统，覆盖清洗、筛选与去重。
 - [NeMo Curator](https://github.com/NVIDIA/NeMo-Curator) - NVIDIA 的大规模语料策展工具集。
+- [CuratorKIT](https://github.com/Lexsi-Labs/CuratorKIT) - 后训练数据策展全生命周期流水线：溯源精确的幻觉门 + reward/多样性门 + 自适应修复，导出 TRL/Unsloth/AlignTune 就绪格式，每个样本可审计回源（Lexsi Labs，2026）。
 
 ## 评测
 
@@ -92,6 +94,8 @@
 - [MLE-bench](https://github.com/openai/mle-bench) - OpenAI，75 个 Kaggle 任务衡量 agent 的 ML 工程能力。
 - [PaperBench](https://github.com/openai/preparedness) - OpenAI 2025，从零复现 20 篇 ICML 2024 论文，8,316 个层级化 rubric 节点 + LLM 裁判。
 - [PostTrainBench](https://github.com/aisa-group/PostTrainBench) - 衡量 CLI agent 在给定算力预算内自动完成后训练任务的能力。
+- [ResearchClawBench](https://github.com/InternScience/ResearchClawBench) - 端到端自主科研基准：40 个真实论文任务、10 学科，专家加权 rubric 对照评分，「50 分追平论文、70 分超越论文」，leaderboard 周更（SJTU/InternScience，2026）。
+- [Agent²RL-Bench](https://github.com/microsoft/RD-Agent/blob/main/rdagent/scenarios/rl/autorl_bench/README.md) - 考核 agent 能否自主工程化完整 RL 后训练管线（含闭环在线 RL 与轨迹收集），带运行时行为诊断（Soochow/MSRA/PKU，2026）。
 - [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) - 社区标准评测框架。
 - [OpenCompass](https://github.com/open-compass/opencompass) - 覆盖多维能力的大模型评测体系。
 
@@ -110,6 +114,10 @@
 - [DeepScientist](https://github.com/ResearAI/DeepScientist) - 本地优先的自主研究工作室：基线复现 → 实验 → 论文级产出。
 - [FAROS](https://github.com/OpenNSWM-Lab/FAROS) - 蓝图驱动的 AutoResearch 运行时：想法 → 实验 → 写作 → 同行评审。
 - [NanoResearch](https://github.com/OpenRaiser/NanoResearch) - 轻量级自主研究助手（skills/agent 驱动），从选题到端到端研究。
+- [scientific-agent-skills](https://github.com/K-Dense-AI/scientific-agent-skills) - 把任意 agent 变成 AI Scientist 的技能库：165 个验证 skill + 100+ 科学数据库，闭环系统的「动手能力」走标准化 skill 接口（K-Dense-AI，2026）。
+- [DARE](https://github.com/yogsoth-ai/de-anthropocentric-research-engine) - 900+ 纯 markdown skill 的自主研究编排系统，10 个可组合 package、四层命令层级、非线性回溯，零运行时、兼容 75+ agent harness。
+- [Open Science Desktop](https://github.com/ai4s-research/open-science) - 本地优先的开源科研工作台（Tauri + MCP + agent skills），产物全链路可回溯，`osd` CLI 可无头/远程驱动；ResearchClawBench Pass@1 榜首。
+- [The Station](https://github.com/dualverse-ai/station) - 开放世界多智能体科学发现环境：无中央管理器，agent 自主探索、发表并建设共享文献（DualverseAI，v2.0.0）。
 
 **autoresearch 衍生生态**：[autoresearch-mlx](https://github.com/karpathy/autoresearch) 的 Apple Silicon 移植、pi-autoresearch（把循环泛化到任意可度量指标）、uditgoenka/autoresearch（Claude Code 插件形态）、AutoKernel（同一范式用于 GPU kernel 自动优化，arXiv:2603.21331）。
 
@@ -123,6 +131,7 @@
 
 | 周 | 报告 |
 | --- | --- |
+| 2026-W38 | [周报：闭环 skill 层爆发，评测与数据层补收](weekly/2026-W38.md) |
 | 2026-W37 | [基线特刊：Auto-Research 三年脉络（2023–2026）](weekly/2026-W37.md) |
 
 完整索引与报告模板见 [weekly/README.md](weekly/README.md) 与 [weekly/TEMPLATE.md](weekly/TEMPLATE.md)。

@@ -14,4 +14,5 @@
 
 | 周 | 日期范围 | 报告 | 本期性质 |
 | --- | --- | --- | --- |
+| W38 | 2026-09-14 ~ 2026-09-20 | [2026-W38.md](2026-W38.md) | 增量：闭环 skill 层本周活跃（DARE / Open Science Desktop / scientific-agent-skills），评测 leaderboard 刷新（ResearchClawBench）；补收基线遗漏（CuratorKIT / Agent²RL-Bench / KDFlow / The Station） |
 | W37 | 基线：2023-01 ~ 2026-09 | [2026-W37.md](2026-W37.md) | 基线特刊：Auto-Research 三年脉络，后续周报仅收录增量 |
